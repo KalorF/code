@@ -1,9 +1,16 @@
 <template>
   <div class="bbsPage">
     <div class="bbsHead">
-      <span class="sp" :class="{ active: activeIndex === 0 }">热门</span>
+      <span class="sp" @click="handleSel(0)" :class="{ active: activeIndex === 0 }">大世界</span>
       <span> | </span>
-      <span class="sp" :class="{ active: activeIndex === 1 }">最新</span>
+      <span class="sp" @click="handleSel(1)" :class="{ active: activeIndex === 1 }">问答区</span>
+      <el-dropdown split-button size="medium" class="pu" type="primary" @command="handleCommand">
+        发布
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command='0'>发布大世界</el-dropdown-item>
+          <el-dropdown-item command='1'>发布问答</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <div v-for="i in 10" :key="i" class="bbsItem" @click="viewDetail(i)">
       <div class="author">
@@ -25,6 +32,21 @@
         </div>
       </div>
     </div>
+    <!-- 发布弹窗 -->
+    <el-dialog :title="type === 0 ? '发布大世界' : '发布问答'" :visible.sync="pubDialog" width="40%" :before-close="handleClose" :modal='false'>
+      <el-form ref="form" label-width="80px">
+        <el-form-item label="标题">
+          <el-input v-model="title"></el-input>
+        </el-form-item>
+        <el-form-item label="内容">
+          <el-input type="textarea"  :rows="6" v-model="desc"></el-input>
+        </el-form-item>
+         <el-form-item>
+          <el-button type="primary" @click="handlePub">发布</el-button>
+          <el-button @click="handleClose">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -33,10 +55,37 @@
 export default {
   data () {
     return {
-      activeIndex: 0
+      activeIndex: 0,
+      type: 0, // 0代表大世界，1代表问答
+      pubDialog: false,
+      title: '',
+      desc: ''
     }
   },
+  mounted () {
+    // 初始化时默认发起一个获取数据请求
+    this.getData()
+  },
   methods: {
+    handleSel (type) {
+      this.activeIndex = type
+      // 发起一个获取数据api
+      // this.getData()
+    },
+    handleClose () {
+      this.pubDialog = false
+      this.type = 0
+      this.title = ''
+      this.desc = ''
+    },
+    handleCommand (command) {
+      this.pubDialog = true
+      this.type = Number(command)
+    },
+    // 发布操作
+    handlePub () {
+      // 带上type区分是大世界还是问答
+    },
     // 比如说传id
     viewDetail (id) {
       const { href } = this.$router.resolve({
@@ -44,6 +93,9 @@ export default {
         query: { id: id }
       })
       window.open(href, '_blank')
+    },
+    getData () {
+
     }
   }
 }
@@ -62,15 +114,22 @@ export default {
   .bbsHead {
     position: relative;
     cursor: pointer;
-    height: 30px;
-    line-height: 30px;
     border-bottom: 1px solid #f5f5f5;
     padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    .pu {
+      margin-left: auto;
+    }
     .sp {
-      font-size: 14px;
+      font-size: 16px;
+      margin-right: 10px;
       &.active {
         color: #409DFF;
       }
+    }
+    .sp:nth-child(3) {
+      margin-left: 10px;
     }
   }
 

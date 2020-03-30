@@ -46,14 +46,14 @@
               <el-button size="mini" type="primary">回复</el-button>
             </div>
             <!-- 其它回复 -->
-            <div class="otherReply" v-for="(ite, index) in item.children" :key="index">
+            <div class="otherReply" v-for="(ite, idx) in item.children" :key="idx">
               <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg" alt="">
               <div class="other">
                 <h5>范德萨发大发</h5>
                 <div class="content">哈哈哈哈</div>
                 <div class="footer">
                   <div>2020-03-25</div>
-                  <div @click="handleOtherReply(item, ite, index)" class="reply"><i class="el-icon-chat-round"></i>回复</div>
+                  <div @click="handleOtherReply({item, ite, index, idx})" class="reply"><i class="el-icon-chat-round"></i>回复</div>
                 </div>
                 <div class="replyToBox" v-if="ite.status">
                   <el-input size="medium" class="input" v-model="othercmtvalue"></el-input>
@@ -105,8 +105,8 @@ export default {
     handleReply (item, index) {
       this.cmtData[index].status = !this.cmtData[index].status
     },
-    handleOtherReply (item, ite, index) {
-      this.cmtData[this.cmtData.indexOf(item)].children[index].status = !this.cmtData[this.cmtData.indexOf(item)].children[index].status
+    handleOtherReply ({ item, ite, idx, index }) {
+      this.cmtData[index].children[idx].status = !this.cmtData[index].children[idx].status
     }
   }
 }
