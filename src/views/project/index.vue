@@ -30,6 +30,17 @@
         </div>
         <div class="price">¥3000</div>
       </div>
+      <!-- 分页 -->
+      <div class="paging">
+        <el-pagination
+          background
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +53,9 @@ export default {
       status: '',
       roleTypeId: '',
       keyword: '',
+      currentPage: 0,
+      pageSize: 10,
+      total: 100,
       selList: [
         {
           title: '项目类型',
@@ -97,6 +111,10 @@ export default {
     search () {
       // 发起请求，带上keyword参数
     },
+    handleCurrentChange (page) {
+      this.currentPage = page
+      // 发起请求
+    },
     viewDetail (id) {
       const { href } = this.$router.resolve({
         path: '/projectDetail',
@@ -116,6 +134,11 @@ export default {
   margin-left: 15%;
   margin-bottom: 10px;
   z-index: -1;
+  .paging {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
   .selBox {
     background: #feffff;
     padding: 35px 40px 10px;

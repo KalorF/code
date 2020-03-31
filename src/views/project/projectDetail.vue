@@ -7,6 +7,8 @@
         <div class="item"><span>金额：</span><span>¥3000</span></div>
         <div class="item"><span>类型：</span><span>其他</span></div>
         <div class="item"><span>周期：</span><span>7天</span></div>
+        <div class="item"><span>竞选人数：</span><span>6人</span></div>
+        <div class="item"><span>竞选团队：</span><span>3支</span></div>
       </div>
       <div class="status">招募中</div>
       <el-dropdown split-button size="medium" class="pu" type="primary" @command="handleCommand">

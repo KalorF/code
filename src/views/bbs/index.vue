@@ -32,6 +32,17 @@
         </div>
       </div>
     </div>
+    <!-- 分页 -->
+      <div class="paging">
+        <el-pagination
+          background
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
     <!-- 发布弹窗 -->
     <el-dialog :title="type === 0 ? '发布大世界' : '发布问答'" :visible.sync="pubDialog" width="40%" :before-close="handleClose" :modal='false'>
       <el-form ref="form" label-width="80px">
@@ -59,7 +70,10 @@ export default {
       type: 0, // 0代表大世界，1代表问答
       pubDialog: false,
       title: '',
-      desc: ''
+      desc: '',
+      currentPage: 0,
+      pageSize: 10,
+      total: 100
     }
   },
   mounted () {
@@ -69,6 +83,7 @@ export default {
   methods: {
     handleSel (type) {
       this.activeIndex = type
+      this.type = type
       // 发起一个获取数据api
       // this.getData()
     },
@@ -90,7 +105,7 @@ export default {
     viewDetail (id) {
       const { href } = this.$router.resolve({
         path: '/bbsDetial',
-        query: { id: id }
+        query: { id: id, type: this.type }
       })
       window.open(href, '_blank')
     },
@@ -110,7 +125,12 @@ export default {
   margin-left: 15%;
   margin-bottom: 10px;
   z-index: -1;
-
+  .paging {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
   .bbsHead {
     position: relative;
     cursor: pointer;
@@ -134,7 +154,6 @@ export default {
   }
 
   .bbsItem {
-    height: 100px;
     background: #feffff;
     padding: 10px 30px;
     border-bottom: 1px solid #f5f5f5;

@@ -28,7 +28,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-         <el-form-item label="招募角色">
+        <el-form-item label="招募角色">
           <el-select v-model="role" placeholder="请选择">
             <el-option
               v-for="(item, index) in roleOptions"
@@ -50,6 +50,12 @@
         </el-form-item>
       </el-form>
     </div>
+
+    <el-dialog title="扫码支付" :visible.sync="dialogVisible" width="40%" :before-close="handleClose" :modal="false">
+      <div class="qrmsg">
+        <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1231092524,2455027789&fm=26&gp=0.jpg" alt="">
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -64,6 +70,7 @@ export default {
       askFor: '',
       desc: '',
       img: '',
+      dialogVisible: false,
       projectType: '', // 发布的时候用
       role: '', // 发布的时候用
       typeOptions: [
@@ -104,7 +111,12 @@ export default {
       this.img = URL.createObjectURL(e.target.files[0]) // 对接的时候注释
       // 传给后端的图片文件
     },
-    handlePub () {}
+    handlePub () {
+      this.dialogVisible = true
+    },
+    handleClose () {
+      this.dialogVisible = false
+    }
   }
 }
 </script>
@@ -119,6 +131,15 @@ export default {
   z-index: -1;
   background: #feffff;
   padding: 20px;
+  .qrmsg {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    img {
+      height: 260px;
+      width: 260px;
+    }
+  }
   .title {
     font-size: 18px;
     border-left: 2px solid #409DFF;

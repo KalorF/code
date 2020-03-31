@@ -20,7 +20,7 @@
             <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg" alt="">
             <div class="name">哈哈哈哈</div>
             <div class="desc">介绍：回国后发个合法合规</div>
-            <div class="type">团队开发者</div>
+            <div class="type">团队开发者(6人)</div>
             <el-button size="mini" @click="viewEval(xx)">查看评价</el-button>
             <el-button size="mini" type="success" @click="giveProject(xxx,xx)">授予项目</el-button>
           </div>
@@ -57,6 +57,18 @@
       </el-table-column>
     </el-table>
 
+    <!-- 分页 -->
+    <div class="paging">
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        layout="prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
+
     <el-dialog title="评价" :visible.sync="dialogVisible" width="40%" :before-close="handleClose" :modal="false">
       <div class="eval" v-for="(item, index) in evalList" :key="index">
         <div>评价{{ index + 1 }}：</div>
@@ -76,6 +88,9 @@ export default {
       dialogVisible: false,
       desc: '',
       projectId: '',
+      currentPage: 0,
+      pageSize: 10,
+      total: 100,
       evalList: ['retort范德萨的范德萨发', '规范地方更丰富更多'],
       tableData: [
         {
@@ -120,6 +135,10 @@ export default {
     handleEval (item) {
       this.dialogVisible = true
       this.projectId = item.id
+    },
+    handleCurrentChange (page) {
+      this.currentPage = page
+      // 发起请求
     }
   }
 }
@@ -128,6 +147,10 @@ export default {
 <style lang="scss" scoped>
 .h3 {
   margin-bottom: 5px;
+}
+.paging {
+  margin-top: 12px;
+  float: right;
 }
 .div {
   font-size: 14px;

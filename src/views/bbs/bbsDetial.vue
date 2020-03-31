@@ -12,6 +12,10 @@
         <i class="el-icon-thumb"></i>
         123
       </div>
+      <div>
+        <i class="el-icon-help"></i>
+        踩
+      </div>
     </div>
     <!-- 标题 -->
     <h2>反倒是反倒是广告烦恼的时刻烦恼是封疆大吏方面受到了法律</h2>
@@ -28,6 +32,7 @@
           <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg" alt="头像">
           <el-input size="medium" class="input" @focus="myFocus" @blur="myBlur" v-model="mycmtvalue" placeholder="输入评论..."></el-input>
         </div>
+        <el-button class="btn" v-if="$route.query.type == 1 && showCmtBtn" style="margin-left: 10px" size="small" type="primary">匿名评论</el-button>
         <el-button class="btn" v-if="showCmtBtn" size="small" type="primary">评论</el-button>
       </div>
       <!-- 用户评论 -->
@@ -35,7 +40,7 @@
         <div class="item" v-for="(item, index) in cmtData" :key="index">
           <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg" alt="">
           <div class="otherMsg">
-            <h5>放大镜哦</h5>
+            <div class="nameTl"><span>放大镜哦</span><span>删除</span></div>
             <div class="content">评论内容55555555</div>
             <div class="footer">
               <div>2020-03-25</div>
@@ -44,12 +49,13 @@
             <div class="replyToBox" v-if="item.status">
               <el-input size="medium" class="input" v-model="othercmtvalue"></el-input>
               <el-button size="mini" type="primary">回复</el-button>
+              <el-button size="mini" v-if="$route.query.type == 1">匿名回复</el-button>
             </div>
             <!-- 其它回复 -->
             <div class="otherReply" v-for="(ite, idx) in item.children" :key="idx">
               <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg" alt="">
               <div class="other">
-                <h5>范德萨发大发</h5>
+                <div class="nameTl"><span>范德萨发的</span><span>删除</span></div>
                 <div class="content">哈哈哈哈</div>
                 <div class="footer">
                   <div>2020-03-25</div>
@@ -58,6 +64,8 @@
                 <div class="replyToBox" v-if="ite.status">
                   <el-input size="medium" class="input" v-model="othercmtvalue"></el-input>
                   <el-button size="mini" type="primary">回复</el-button>
+                  <!-- 根据type判断 -->
+                  <el-button size="mini" v-if="$route.query.type == 1">匿名回复</el-button>
                 </div>
               </div>
             </div>
@@ -135,6 +143,7 @@ export default {
     }
     .givelike {
       margin-left: auto;
+      margin-right: 20px;
     }
     .nameAndDate {
       margin-left: 10px;
@@ -202,6 +211,18 @@ export default {
         font-size: 14px;
         margin-left: 13px;
         width: 100%;
+        .nameTl {
+          display: flex;
+          font-size: 14px;
+          span:nth-child(1) {
+            font-weight: bold;
+          }
+          span:nth-child(2) {
+            margin-left: auto;
+            cursor: pointer;
+            color: #ff7979;
+          }
+        }
         .content {
           font-size: 13px;
         }

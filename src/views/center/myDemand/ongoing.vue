@@ -43,7 +43,24 @@
         label="发布时间"
         prop="createTime">
       </el-table-column>
+      <el-table-column fixed="right" label="操作">
+        <template slot-scope="scope">
+          <el-button type="success" size="mini" @click="handleFinish(scope.row)">完成验收</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <div class="paging">
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        layout="prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
 
     <el-dialog title="评价" :visible.sync="dialogVisible" width="40%" :before-close="handleClose" :modal="false">
       <div class="eval" v-for="(item, index) in evalList" :key="index">
@@ -64,6 +81,9 @@ export default {
       dialogVisible: false,
       desc: '',
       projectId: '',
+      currentPage: 0,
+      pageSize: 10,
+      total: 100,
       evalList: ['retort范德萨的范德萨发', '规范地方更丰富更多'],
       tableData: [
         {
@@ -102,17 +122,23 @@ export default {
     },
     handleClose () {
       this.dialogVisible = false
-      this.desc = ''
     },
     viewEval (id) {
       // 根据id发起请求获取数据
       // this.evalList = xxxxxx
       this.dialogVisible = true
     },
+    handleFinish (id) {
+      // 根据id发起请求获取数据
+    },
     // 评价项目操作
     handleEval (item) {
       this.dialogVisible = true
       this.projectId = item.id
+    },
+    handleCurrentChange (page) {
+      this.currentPage = page
+      // 发起请求
     }
   }
 }
@@ -121,6 +147,10 @@ export default {
 <style lang="scss" scoped>
 .h3 {
   margin-bottom: 5px;
+}
+.paging {
+  margin-top: 12px;
+  float: right;
 }
 .div {
   font-size: 14px;

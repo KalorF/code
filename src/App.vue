@@ -6,11 +6,15 @@
         <router-link to="/">首页</router-link>
         <router-link to="/bbs">发现</router-link>
         <router-link to="/project">项目</router-link>
-        <router-link to="/team">开发团队</router-link>
+        <router-link to="/team">开发者招聘</router-link>
         <div class="my">
           <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg" alt="头像">
           <div class="name">哈哈哈哈</div>
           <div class="myce" @click="toCenter">个人中心</div>
+          <div class="msg" @click="$router.push('/message')">
+            <i class="el-icon-message-solid"></i>
+            <span>12</span>
+          </div>
         </div>
         <div class="lo" @click="$router.push('/login')">登陆</div>
         <div class="re" @click="$router.push('/registry')">注册</div>
@@ -102,6 +106,17 @@ body {
     .myce {
       margin-left: 20px;
       cursor: pointer;
+    }
+    .msg {
+      margin-left: 20px;
+      cursor: pointer;
+      font-size: 20px;
+      span {
+        font-size: 14px;
+      }
+    }
+    .msg:hover {
+      color: #4289dc;
     }
     .myce:hover {
       color: #1A85FF;

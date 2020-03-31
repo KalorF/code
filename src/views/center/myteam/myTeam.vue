@@ -2,24 +2,32 @@
   <div class="myTeamPage">
     <el-button size="small" type="primary" @click="handleCreate">创建团队</el-button>
     <el-button size="small" type="warning">解散团队</el-button>
+    <el-button size="small" type="danger">退出团队</el-button>
     <div class="msg">
       <div class="one">
         <span>头像：</span>
         <img :src="teamInfo.imgUrl" alt="">
-        <div class="item">
+        <!-- <div class="item">
           <span>团队名：</span>
           <span>{{ teamInfo.name }}</span>
-        </div>
+        </div> -->
         <el-button size="small" @click="edit">编辑</el-button>
       </div>
       <div class="two">
-        <div>个人介绍：</div>
+        <span>团队名：</span>
+        <span>{{ teamInfo.name }}</span>
+      </div>
+      <div class="two">
+        <div>团队介绍：</div>
         <div>{{ teamInfo.desc }}</div>
       </div>
     </div>
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane label="团队成员"  name="first"><members /></el-tab-pane>
-      <el-tab-pane label="团队项目" lazy name="second"><project /></el-tab-pane>
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="团队成员"  name="1"><members /></el-tab-pane>
+      <el-tab-pane label="招聘管理"  name="2"><employ /></el-tab-pane>
+      <el-tab-pane label="入队申请" lazy name="3"><teamJoin /></el-tab-pane>
+      <el-tab-pane label="退队申请" lazy name="4"><teamOut /></el-tab-pane>
+      <el-tab-pane label="团队项目" lazy name="5"><project /></el-tab-pane>
     </el-tabs>
 
     <!-- 弹窗 -->
@@ -50,13 +58,16 @@
 // import axios from 'axios' // 对接的时候打开
 import members from './members'
 import project from './project'
+import teamJoin from './teamJoin'
+import teamOut from './teamOut'
+import employ from './employ'
 
 export default {
-  components: { members, project },
+  components: { members, project, teamJoin, teamOut, employ },
   data () {
     return {
       title: '编辑团队信息',
-      activeName: 'first',
+      activeName: '1',
       dialogVisible: false,
       teamInfo: {
         imgUrl: 'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=4016333918,4269266815&fm=26&gp=0.jpg',

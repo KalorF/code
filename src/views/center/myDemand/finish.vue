@@ -16,8 +16,8 @@
             <div class="desc">介绍：回国后发个合法合规</div>
             <div class="type">个人开发者</div>
           </div>
-          <h3 class="h3">开发者评价</h3>
-          <div class="div">范德萨对方是否对方是否</div>
+          <!-- <h3 class="h3">开发者评价</h3>
+          <div class="div">范德萨对方是否对方是否</div> -->
         </template>
       </el-table-column>
       <el-table-column
@@ -51,6 +51,18 @@
       </el-table-column>
     </el-table>
 
+    <!-- 分页 -->
+    <div class="paging">
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        layout="prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
+
     <el-dialog title="评价" :visible.sync="dialogVisible" width="40%" :before-close="handleClose" :modal="false">
       <el-form ref="form" label-width="100px">
         <el-form-item label="评价开发者">
@@ -72,6 +84,9 @@ export default {
       dialogVisible: false,
       desc: '',
       projectId: '',
+      currentPage: 0,
+      pageSize: 10,
+      total: 100,
       evalList: ['retort范德萨的范德萨发', '规范地方更丰富更多'],
       tableData: [
         {
@@ -83,7 +98,7 @@ export default {
           time: '32132',
           desc: '范德萨发的方式对法国代购的广告费',
           askFor: '好过分好过分个韩国发货',
-          percentage: 0,
+          percentage: 100,
           createTime: '2020-03-30 12:00'
         },
         {
@@ -95,7 +110,7 @@ export default {
           time: '32132',
           desc: '范德萨发的方式对法国代购的广告费',
           askFor: '好过分好过分个韩国发货',
-          percentage: 10,
+          percentage: 100,
           createTime: '2020-03-30 12:00'
         }
       ]
@@ -120,6 +135,10 @@ export default {
     handleEval (item) {
       this.dialogVisible = true
       this.projectId = item.id
+    },
+    handleCurrentChange (page) {
+      this.currentPage = page
+      // 发起请求
     }
   }
 }
@@ -128,6 +147,10 @@ export default {
 <style lang="scss" scoped>
 .h3 {
   margin-bottom: 5px;
+}
+.paging {
+  margin-top: 12px;
+  float: right;
 }
 .div {
   font-size: 14px;
