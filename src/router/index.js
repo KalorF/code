@@ -16,7 +16,8 @@ const routes = [
   { path: '/projectDetail', name: 'projectDetail', component: () => import('../views/project/projectDetail') },
   { path: '/center', name: 'center', component: () => import('../views/center') },
   { path: '/team', name: 'team', component: () => import('../views/team') },
-  { path: '/message', name: 'message', component: () => import('../views/msg') }
+  { path: '/message', name: 'message', component: () => import('../views/msg') },
+  { path: '/admin', name: 'admin', component: () => import('../views/admin') }
 ]
 
 const router = new VueRouter({

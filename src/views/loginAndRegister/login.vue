@@ -32,6 +32,9 @@ export default {
   methods: {
     // 登陆操作
     handleLogin () {
+      if (this.username === 'admin' && this.password === 'admin') {
+        this.$router.push('/admin')
+      }
     }
   }
 }
